@@ -11,12 +11,18 @@ import javax.swing.JOptionPane;
 
 public class Login extends javax.swing.JFrame {
     
-    HashMap<String,String> id = new HashMap<>();
-    HashMap<String,String> admin = new HashMap<>();
+    private HashMap<Integer,String> status = new HashMap<>();
     
     public Login() {
         initComponents();
         setSize(963,763);
+        status.put(1, "Mahasiswa");
+        status.put(2, "Admin");
+        
+        for(int i=1;i<=2;i++) {
+            jComboBox1.addItem(status.get(i));
+        }
+        jTextField2.setVisible(false);
         
     }
 
@@ -123,19 +129,23 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-
-        String usernametemp = jTextField1.getText();
-        String passwordtemp = jPasswordField1.getText();
-        
-        boolean bool = false;
         
         Connect koneksi = new Connect();
         Connection Koneksi1 = koneksi.getConnection();
         
+        int flag = 1;
+        
         try {
-
+            
+            String strSelect = "";
+            
+            if(jTextField2.getText().equals("Mahasiswa")) {
+                strSelect = "select * from mahasiswa";
+            } else if (jTextField2.getText().equals("Admin")) {
+                strSelect = "select * from admin ";
+            }
+            
             Statement stmt = Koneksi1.createStatement();
-            String strSelect = "select * from mahasiswa";
             ResultSet rset = stmt.executeQuery(strSelect);
 
             while(rset.next()) {
@@ -143,53 +153,30 @@ public class Login extends javax.swing.JFrame {
                 String username = rset.getString("username");
                 String password = rset.getString("password");
                 
-                id.put(username, password);
-            }
-            try {
-                if(id.get(usernametemp).equals(passwordtemp)) {
-                    MenuUtama menu = new MenuUtama(jTextField1.getText());
-                    menu.setVisible(true);
-                    dispose();
-                    bool=false;
-                } else {
-                    throw new NullPointerException();
+                if(username.equals(jTextField1.getText()) && password.equals(jPasswordField1.getText())) {
+                   flag = 0;
+                   break;
                 }
-            } catch(NullPointerException e){
-                
-            }
-            id.clear();
-            
-            strSelect = "select * from admin";
-            rset = stmt.executeQuery(strSelect);
-            
-            while(rset.next()) {
-                
-                String username = rset.getString("username");
-                String password = rset.getString("password");
-                
-                admin.put(username,password);
             }
             
-            try{
-                if(admin.get(usernametemp).equals(passwordtemp)) {
-                EditDatabase edi = new EditDatabase();
-                edi.setVisible(true);
-                
+            koneksi.close(Koneksi1);
+            
+            if (flag == 0 && jTextField2.getText().equals("Mahasiswa")) {
+                MenuUtama menu = new MenuUtama(jTextField1.getText());
+                menu.setVisible(true);
+                dispose();
+            } else if ( flag == 0 && jTextField2.getText().equals("Admin")) {
+                EditDatabase ed = new EditDatabase();
+                ed.setVisible(true);
                 dispose();
             } else {
-                throw new NullPointerException();
-                }
-            } catch(NullPointerException e){
-                if (bool==true) {
-                JOptionPane.showMessageDialog(this, "Invalid Username and Password");
-                }
+                JOptionPane.showMessageDialog(this, "Invalid Username or Password");
             }
-            
 
         } catch(SQLException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
-        koneksi.close(Koneksi1);
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
@@ -200,6 +187,16 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        // TODO add your handling code here:
+        String alur = (String) jComboBox1.getSelectedItem();
+        jTextField2.setText(alur);
+    }                                          
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        // TODO add your handling code here:
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

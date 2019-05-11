@@ -171,6 +171,8 @@ public class Login extends javax.swing.JFrame {
                 dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "Invalid Username or Password");
+                jTextField1.setText("");
+                jPasswordField1.setText("");
             }
 
         } catch(SQLException ex) {

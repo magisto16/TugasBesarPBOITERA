@@ -20,6 +20,10 @@ public class MenuUtama extends javax.swing.JFrame {
     String username;
     int saldo;
 
+    /*untuk koneksi ke database*/
+    Connect koneksi = new Connect();
+    Connection Koneksi1 = koneksi.getConnection();
+    
     public MenuUtama(String username) {        
         initComponents();
         tblInfo.getTableHeader().setFont(new Font("Calibri", Font.BOLD, 18));
@@ -29,18 +33,15 @@ public class MenuUtama extends javax.swing.JFrame {
         setSize(963,763);
         
         
-        try(Connection conn = DriverManager.getConnection(
-           "jdbc:mysql://localhost/vending_machine",
-            "root",
-            "");
-            Statement stmt = conn.createStatement();
-            ){
+       try{
+            Statement stmt = Koneksi1.createStatement();
             ResultSet rx = stmt.executeQuery("SELECT saldo FROM mahasiswa WHERE username=" + username);
             rx.next();
             saldo = rx.getInt("saldo");
         }catch(SQLException e){
-            JOptionPane.showMessageDialog(this, "belum tersambung ke database");
+            JOptionPane.showMessageDialog(this, "ada kesalahan dalam mengakses ke database");
         }
+        
         this.username=username;
         String []judul={"Nama","Slot","Stok","Harga"};
         model = new DefaultTableModel(judul,0);
@@ -261,13 +262,8 @@ public class MenuUtama extends javax.swing.JFrame {
 
     private void btnBuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuyActionPerformed
 
-       try(
-           Connection conn = DriverManager.getConnection(
-           "jdbc:mysql://localhost/vending_machine",
-            "root",
-            "");
-            Statement stmt = conn.createStatement();
-        ){
+       try{
+          Statement stmt = Koneksi1.createStatement();
           int slot[];
                     
           slot = new int[4];
@@ -320,11 +316,11 @@ public class MenuUtama extends javax.swing.JFrame {
             }
             for(i=0;i<4;i++){
               String query = "UPDATE makanan SET stok=" + stok[i] + " WHERE slot=" + (i+1);
-              PreparedStatement pre = (PreparedStatement) conn.prepareStatement(query);
+              PreparedStatement pre = (PreparedStatement) Koneksi1.prepareStatement(query);
               pre.executeUpdate();
             }
             saldo=saldo-total;
-            PreparedStatement pre = (PreparedStatement) conn.prepareStatement("UPDATE mahasiswa SET saldo=" + saldo + " WHERE username=" + username);
+            PreparedStatement pre = (PreparedStatement) Koneksi1.prepareStatement("UPDATE mahasiswa SET saldo=" + saldo + " WHERE username=" + username);
             pre.executeUpdate();
             
             JOptionPane.showMessageDialog(this,"Pembelian \n Lays : " +slot[0] + "\n Chitato : " + slot[1] + "\n Freshtea : " + slot[2] + "\n Aqua : " + slot[3]

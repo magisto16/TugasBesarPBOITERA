@@ -262,7 +262,7 @@ public class MenuUtama extends javax.swing.JFrame {
 
     private void btnBuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuyActionPerformed
 
-       try{
+    try{
           Statement stmt = Koneksi1.createStatement();
           int slot[];
                     
@@ -270,75 +270,93 @@ public class MenuUtama extends javax.swing.JFrame {
           //menyimpan inputan di tiap slot
           if(txtFSlot1.getText().equals("")){
               slot[0] = 0;
+          }else if(Integer.parseInt(txtFSlot1.getText())<0){
+              slot[0] = 0;
+              JOptionPane.showMessageDialog(this, "masukkan salah");
           }else{
               slot[0] = Integer.parseInt(txtFSlot1.getText());
           }
           
           if(txtFSlot2.getText().equals("")){
               slot[1] = 0;
+          }else if(Integer.parseInt(txtFSlot2.getText())<0){
+              slot[1] = 0;
+              JOptionPane.showMessageDialog(this, "masukkan salah");
           }else{
               slot[1] = Integer.parseInt(txtFSlot2.getText());
           }
           
           if(txtFSlot3.getText().equals("")){
               slot[2] = 0;
+          }else if(Integer.parseInt(txtFSlot3.getText())<0){
+              slot[2] = 0;
+              JOptionPane.showMessageDialog(this, "masukkan salah");
           }else{
               slot[2] = Integer.parseInt(txtFSlot3.getText());
           }
           
           if(txtFSlot4.getText().equals("")){
               slot[3] = 0;
+          }else if(Integer.parseInt(txtFSlot4.getText())<0){
+              slot[3] = 0;
+              JOptionPane.showMessageDialog(this, "masukkan salah");
           }else{
               slot[3] = Integer.parseInt(txtFSlot4.getText());
           }
-                    
-          int stok[] = new int[4];
-          int harga[] = new int[4];
-          int i;
-          ResultSet rs = stmt.executeQuery("SELECT * FROM makanan");
-          i=0;
-          while(rs.next()){
-              stok[i] = rs.getInt("stok");
-              harga[i] = rs.getInt("harga");
-              i++;
-          }
-          int total = 0;
-          for(i=0;i<4;i++){
-              total = total + slot[i] * harga[i];
-          }
-          if(saldo>=total){
+          
+          if(!isEmpty(slot,4)){
+            int stok[] = new int[4];
+            int harga[] = new int[4];
+            int i;
+            ResultSet rs = stmt.executeQuery("SELECT * FROM makanan");
+            i=0;
+            while(rs.next()){
+                stok[i] = rs.getInt("stok");
+                harga[i] = rs.getInt("harga");
+                i++;
+            }
+            int total = 0;
             for(i=0;i<4;i++){
-              if(slot[i]<=stok[i]) {
-                 stok[i]=stok[i]-slot[i]; 
-              } else {
-                  throw new SQLException();
+                total = total + slot[i] * harga[i];
+            }
+            if(saldo>=total){
+              for(i=0;i<4;i++){
+                if(slot[i]<=stok[i]){
+                  stok[i]=stok[i]-slot[i];
+                }else{
+                    throw new SQLException();
+                }
               }
-            }
-            for(i=0;i<4;i++){
-              String query = "UPDATE makanan SET stok=" + stok[i] + " WHERE slot=" + (i+1);
-              PreparedStatement pre = (PreparedStatement) Koneksi1.prepareStatement(query);
+              for(i=0;i<4;i++){
+                String query = "UPDATE makanan SET stok=" + stok[i] + " WHERE slot=" + (i+1);
+                PreparedStatement pre = (PreparedStatement) Koneksi1.prepareStatement(query);
+                pre.executeUpdate();
+              }
+              saldo=saldo-total;
+              PreparedStatement pre = (PreparedStatement) Koneksi1.prepareStatement("UPDATE mahasiswa SET saldo=" + saldo + " WHERE username=" + username);
               pre.executeUpdate();
+
+              JOptionPane.showMessageDialog(this,"Pembelian \n Lays : " +slot[0] + "\n Chitato : " + slot[1] + "\n Freshtea : " + slot[2] + "\n Aqua : " + slot[3]
+              + "\n Dengan harga total " + total + " telah berhasil saldo " + saldo);
+              
+
+              //catat transaksi
+              //pre = (PreparedStatement) conn.prepareStatement("INSERT into transaksi values ('"+username+"',"+slot[0]+","+slot[1]+","+slot[2]+","+slot[3]+",CURRENT_TIME");
+            }else{
+                JOptionPane.showMessageDialog(this,"Uang Anda Kurang");
             }
-            saldo=saldo-total;
-            PreparedStatement pre = (PreparedStatement) Koneksi1.prepareStatement("UPDATE mahasiswa SET saldo=" + saldo + " WHERE username=" + username);
-            pre.executeUpdate();
-            
-            JOptionPane.showMessageDialog(this,"Pembelian \n Lays : " +slot[0] + "\n Chitato : " + slot[1] + "\n Freshtea : " + slot[2] + "\n Aqua : " + slot[3]
-            + "\n Dengan harga total " + total + " telah berhasil saldo " + saldo);
-            txtFSlot1.setText("");
-            txtFSlot2.setText("");
-            txtFSlot3.setText("");
-            txtFSlot4.setText("");
-            txtFAmount.setText(String.valueOf(saldo));
-            tampilInfo();
-          }else{
-              JOptionPane.showMessageDialog(this,"Uang Anda Kurang");
           }
+          txtFSlot1.setText("");
+          txtFSlot2.setText("");
+          txtFSlot3.setText("");
+          txtFSlot4.setText("");
+          txtFAmount.setText(String.valueOf(saldo));
+          tampilInfo();
        }catch(SQLException e){
            JOptionPane.showMessageDialog(this, "Ada beberapa kesalahan yang dideteksi : \n"
-                                               + "1. Tertangkap SQLException \n"
-                                               + "2. Jumlah stok barang tidak memenuhi permintaan \n"
-                                               + "3. Anda belum membaca Bismillah");
+                   + "1. Tertangkap SQLException \n"
+                   + "2. Jumlah stok barang tidak memenuhi permintaan \n"
+                   + "3. Anda belum membaca bismillah \n");
        }
     }//GEN-LAST:event_btnBuyActionPerformed
 
@@ -410,6 +428,17 @@ public class MenuUtama extends javax.swing.JFrame {
     private javax.swing.JTextField txtFSlot3;
     private javax.swing.JTextField txtFSlot4;
     // End of variables declaration//GEN-END:variables
+   
+   //fungsi cek isi slot
+   private boolean isEmpty(int slot[],int x){
+    boolean isi = true;
+    for(int i=0;i<x;i++){
+        if(slot[i] != 0){
+            isi = false;
+        }
+    }
+    return isi;
+  }
 
     private void tampilInfo() {
         int row = tblInfo.getRowCount();

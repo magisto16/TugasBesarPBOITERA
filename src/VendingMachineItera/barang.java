@@ -228,22 +228,50 @@ public class barang extends javax.swing.JFrame {
 
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
         // TODO add your handling code here:
-        try {
-            // TODO add your handling code here:
-            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/vending_machine","root","");
-            cn.createStatement().executeUpdate("update makanan set nama='"+nama.getText()+"',"
-                + "slot='"+slot.getText()+"',stok='"+stok.getText()+"',harga='"+harga.getText()+"'"+ ""
-                + "where id='"+id.getText()+"'");
-
+       if(nama.getText().equals("")||
+           id.getText().equals("")||
+           slot.getText().equals("")||
+           stok.getText().equals("")||
+           harga.getText().equals("")){
+             JOptionPane.showMessageDialog(null,"kolom tidak boleh kosong");
             id.setText("");
             nama.setText("");
             slot.setText("");
             stok.setText("");
             harga.setText("");
-            tampilkan();
-        } catch (SQLException ex) {
-            Logger.getLogger(mahasiswa.class.getName()).log(Level.SEVERE, null, ex);
+        }else{
+        try {
+            // TODO add your handling code here:
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/vending_machine","root","");
+            int hasil=Integer.parseInt(slot.getText());	
+             if(hasil <= 4 ){
+            cn.createStatement().executeUpdate("update makanan set nama='"+nama.getText()+"',"
+            + "slot='"+slot.getText()+"',stok='"+stok.getText()+"',harga='"+harga.getText()+"'"+ ""
+            + "where id='"+id.getText()+"'");
+            
+            id.setText("");
+            nama.setText("");
+            slot.setText("");
+            stok.setText("");
+            harga.setText("");
+            tampilkan(); 
+        }else{
+            JOptionPane.showMessageDialog(null,"jumlah slot kelebihan,input slot maksimal 4");
+            id.setText("");
+           nama.setText("");
+           slot.setText("");
+           stok.setText("");
+           harga.setText("");
+             }} catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"input data tidak valid");
+            id.setText("");
+            nama.setText("");
+            slot.setText("");
+            stok.setText("");
+            harga.setText("");
+            //Logger.getLogger(mahasiswa.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }  
     }//GEN-LAST:event_updateActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -259,22 +287,53 @@ public class barang extends javax.swing.JFrame {
 
     private void insertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertActionPerformed
         // TODO add your handling code here:
-        try {
-            // TODO add your handling code here:
-            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/vending_machine","root","");
-            cn.createStatement().executeUpdate("insert into makanan values"+"('"+id.getText()+"','"
-                +nama.getText()+"','"+slot.getText()+"','"+stok.getText()+"','"+harga.getText()+"')");
-
+       if(nama.getText().equals("")||
+           id.getText().equals("")||
+           slot.getText().equals("")||
+           stok.getText().equals("")||
+           harga.getText().equals("")){
+             JOptionPane.showMessageDialog(null,"kolom tidak boleh kosong");
             id.setText("");
             nama.setText("");
             slot.setText("");
             stok.setText("");
             harga.setText("");
-            tampilkan();
-            JOptionPane.showMessageDialog(this, "Input Succes");
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Maaf, anda salah tekan tombol atau salah input");
+        }
+        else{
+        try {
+            // TODO add your handling code here:
+            
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/vending_machine","root","");
+            int hasil=Integer.parseInt(slot.getText());	
+        if(hasil <= 4 ){
+            
+       
+            cn.createStatement().executeUpdate("insert into makanan values"+"('"+id.getText()+"','"
+            +nama.getText()+"','"+slot.getText()+"','"+stok.getText()+"','"+harga.getText()+"')");
+            
+           id.setText("");
+           nama.setText("");
+           slot.setText("");
+           stok.setText("");
+           harga.setText("");
+           tampilkan();
+            JOptionPane.showMessageDialog(null,"input succes");
+        }else{
+            JOptionPane.showMessageDialog(null,"jumlah slot kelebihan");
+            id.setText("");
+           nama.setText("");
+           slot.setText("");
+           stok.setText("");
+           harga.setText("");
+        }}catch (SQLException ex) {
             //Logger.getLogger(mahasiswa.class.getName()).log(Level.SEVERE, null, ex);
+             JOptionPane.showMessageDialog(null,"maaf,anda salah tekan tombol atau salah input");
+                id.setText("");
+               nama.setText("");
+               slot.setText("");
+               stok.setText("");
+               harga.setText("");
+        }
         }
     }//GEN-LAST:event_insertActionPerformed
 

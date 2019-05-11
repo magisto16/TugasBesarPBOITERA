@@ -47,6 +47,7 @@ public class MenuUtama extends javax.swing.JFrame {
         model = new DefaultTableModel(judul,0);
         tblInfo.setModel(model);
         txtFAmount.setText(String.valueOf(saldo));
+        txtFAmount.setEditable(false);
         tampilInfo();
     }
 

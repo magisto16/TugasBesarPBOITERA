@@ -178,6 +178,19 @@ public class admin extends javax.swing.JFrame {
 
     private void insertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertActionPerformed
         // TODO add your handling code here:
+        if(username.getText().equals("")||
+           nama.getText().equals("")||
+           password.getText().equals("")||
+           password.getText().equals("")||
+           id.getText().equals("")){
+           JOptionPane.showMessageDialog(null,"kolom tidak boleh kosong");
+           id.setText("");
+           username.setText("");
+           nama.setText("");
+           password.setText("");
+        }
+         
+         else{
         try {
             // TODO add your handling code here:
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/vending_machine","root","");
@@ -193,23 +206,49 @@ public class admin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Maaf, anda salah tekan tombol atau salah input");
             //Logger.getLogger(mahasiswa.class.getName()).log(Level.SEVERE, null, ex);
         }
+         }
     }//GEN-LAST:event_insertActionPerformed
 
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
         // TODO add your handling code here:
-         try {
-            // TODO add your handling code here:
-            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/vending_machine","root","");
-            cn.createStatement().executeUpdate("update admin set "+ "User_ID='"+id.getText()+"',"
-            + "password='"+password.getText()+"',nama='"+nama.getText()+"' "+ "where "
-            + "username='"+username.getText()+"'");
+         if(username.getText().equals("")||
+           nama.getText().equals("")||
+           password.getText().equals("")||
+           password.getText().equals("")||
+           id.getText().equals("")){
+             JOptionPane.showMessageDialog(null,"kolom tidak boleh kosong");
             id.setText("");
             username.setText("");
             nama.setText("");
             password.setText("");
-             tampilkan(); 
+        }
+       
+        else{
+         try {
+            // TODO add your handling code here:
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/vending_machine","root","");
+            cn.createStatement().executeUpdate("update admin set "
+            + "username='"+username.getText()+"',"
+            + "',nama='"+nama.getText()+"',"
+            + "password='"+password.getText()+"' "+ "where "
+            + "User_ID='"+id.getText()+"'");
+            
+           
+            
+            id.setText("");
+            username.setText("");
+            nama.setText("");
+            password.setText("");
+            tampilkan(); 
+             //JOptionPane.showMessageDialog(null,"maaf,anda salah tekan tombol atau salah input");
         } catch (SQLException ex) {
-            Logger.getLogger(mahasiswa.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null,"input data tidak valid");
+             id.setText("");
+            username.setText("");
+            nama.setText("");
+            password.setText("");
+            //Logger.getLogger(mahasiswa.class.getName()).log(Level.SEVERE, null, ex);
+        }
         }
     }//GEN-LAST:event_updateActionPerformed
 

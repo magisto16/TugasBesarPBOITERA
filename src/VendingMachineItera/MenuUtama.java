@@ -17,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class MenuUtama extends javax.swing.JFrame {
     DefaultTableModel model;
+    FungsiUtama f;
     String username;
     int saldo;
 
@@ -26,6 +27,7 @@ public class MenuUtama extends javax.swing.JFrame {
     
     public MenuUtama(String username) {        
         initComponents();
+        f = new FungsiUtama();
         tblInfo.getTableHeader().setFont(new Font("Calibri", Font.BOLD, 18));
         tblInfo.getTableHeader().setOpaque(false);
         tblInfo.getTableHeader().setBackground(new Color(32,126,203));
@@ -306,7 +308,7 @@ public class MenuUtama extends javax.swing.JFrame {
               slot[3] = Integer.parseInt(txtFSlot4.getText());
           }
           
-          if(!isEmpty(slot,4)){
+          if(!f.isEmpty(slot,4)){
             int stok[] = new int[4];
             int harga[] = new int[4];
             int i;
@@ -431,17 +433,6 @@ public class MenuUtama extends javax.swing.JFrame {
     private javax.swing.JTextField txtFSlot4;
     // End of variables declaration//GEN-END:variables
    
-   //fungsi cek isi slot
-   private boolean isEmpty(int slot[],int x){
-    boolean isi = true;
-    for(int i=0;i<x;i++){
-        if(slot[i] != 0){
-            isi = false;
-        }
-    }
-    return isi;
-  }
-
     private void tampilInfo() {
         int row = tblInfo.getRowCount();
         for(int i=0;i<row;i++){

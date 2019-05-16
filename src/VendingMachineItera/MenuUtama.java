@@ -7,6 +7,8 @@ package VendingMachineItera;
  * and open the template in the editor.
  */
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.Color;
 import java.awt.Font;
 import java.sql.*;
@@ -33,6 +35,9 @@ public class MenuUtama extends javax.swing.JFrame {
         tblInfo.getTableHeader().setBackground(new Color(32,126,203));
         tblInfo.getTableHeader().setForeground(new Color(255,255,255));
         setSize(963,763);
+        Toolkit toolkit = getToolkit();
+        Dimension size = toolkit.getScreenSize();
+        setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);
         
         
        try{

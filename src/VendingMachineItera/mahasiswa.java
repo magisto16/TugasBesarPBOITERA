@@ -1,5 +1,7 @@
 package VendingMachineItera;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.Color;
 import java.awt.Font;
 import java.sql.Connection;
@@ -21,6 +23,9 @@ public class mahasiswa extends javax.swing.JFrame {
         jTable2.getTableHeader().setOpaque(false);
         jTable2.getTableHeader().setBackground(new Color(32,126,203));
         jTable2.getTableHeader().setForeground(new Color(255,255,255));
+        Toolkit toolkit = getToolkit();
+        Dimension size = toolkit.getScreenSize();
+        setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);
         
         String []judul={"ID","Username","Nama","Password","Saldo"};
         model = new DefaultTableModel(judul,0);

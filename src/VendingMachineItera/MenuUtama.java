@@ -20,6 +20,8 @@ import javax.swing.table.DefaultTableModel;
 public class MenuUtama extends javax.swing.JFrame {
     DefaultTableModel model;
     FungsiUtama f;
+    int slot[] = new int[4];
+    int harga[] = new int[4];
     String username;
     int saldo;
 
@@ -45,6 +47,13 @@ public class MenuUtama extends javax.swing.JFrame {
             ResultSet rx = stmt.executeQuery("SELECT saldo FROM mahasiswa WHERE username=" + username);
             rx.next();
             saldo = rx.getInt("saldo");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM makanan");
+            int i=0;
+            while(rs.next()){
+                slot[i]=0;
+                harga[i] = rs.getInt("harga");
+                i++;
+            }
         }catch(SQLException e){
             JOptionPane.showMessageDialog(this, "ada kesalahan dalam mengakses ke database");
         }
@@ -55,6 +64,8 @@ public class MenuUtama extends javax.swing.JFrame {
         tblInfo.setModel(model);
         txtFAmount.setText(String.valueOf(saldo));
         txtFAmount.setEditable(false);
+        txtFHarga.setText(String.valueOf(f.hitungHarga(slot, harga, 4)));
+        txtFHarga.setEditable(false);
         tblInfo.setEnabled(false);
         tampilInfo();
     }
@@ -260,15 +271,212 @@ public class MenuUtama extends javax.swing.JFrame {
     private void txtFAmountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFAmountActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFAmountActionPerformed
+    
+    private void txtFSlot1KeyPressed(java.awt.event.KeyEvent evt) {                                     
+        // TODO add your handling code here:
+        int key=evt.getKeyCode();        
+        if(txtFSlot1.getText().equals("")){
+              slot[0] = 0;
+          }else {
+            try{
+                int i = Integer.parseInt(txtFSlot1.getText());
+                slot[0]=i;
+            }catch(NumberFormatException e){
+                JOptionPane.showMessageDialog(this, "Masukkan salah");
+                txtFSlot1.selectAll();
+            }
+        }
+        txtFHarga.setText(String.valueOf(f.hitungHarga(slot, harga, 4)));
+        if(key==10 || key==39){
+            txtFSlot2.requestFocus();
+            txtFSlot2.selectAll();
+        }else if(key==40){
+            btnHelp.requestFocus();
+        }
+    }                                    
 
+    private void txtFSlot2KeyPressed(java.awt.event.KeyEvent evt) {                                     
+        // TODO add your handling code here:
+        int key=evt.getKeyCode();        
+        if(txtFSlot2.getText().equals("")){
+              slot[1] = 0;
+          }else {
+            try{
+                int i = Integer.parseInt(txtFSlot2.getText());
+                slot[1]=i;
+            }catch(NumberFormatException e){
+                JOptionPane.showMessageDialog(this, "Masukkan salah");
+                txtFSlot2.selectAll();
+            }
+        }
+        txtFHarga.setText(String.valueOf(f.hitungHarga(slot, harga, 4)));
+        if(key==10 || key==39){
+            txtFSlot3.requestFocus();
+            txtFSlot3.selectAll();
+        }else if(key==37){
+            txtFSlot1.requestFocus();
+            txtFSlot1.selectAll();
+        }else if(key==40){
+            btnLogout.requestFocus();
+        }
+    }                                    
+
+    private void txtFSlot3KeyPressed(java.awt.event.KeyEvent evt) {                                     
+        // TODO add your handling code here:
+        int key=evt.getKeyCode();        
+        if(txtFSlot3.getText().equals("")){
+              slot[2] = 0;
+          }else {
+            try{
+                int i = Integer.parseInt(txtFSlot3.getText());
+                slot[2]=i;
+            }catch(NumberFormatException e){
+                JOptionPane.showMessageDialog(this, "Masukkan salah");
+                txtFSlot3.selectAll();
+            }
+        }
+        txtFHarga.setText(String.valueOf(f.hitungHarga(slot, harga, 4)));
+        if(key==10 || key==39){
+            txtFSlot4.requestFocus();
+            txtFSlot4.selectAll();
+        }else if(key==37){
+            txtFSlot2.requestFocus();
+            txtFSlot2.selectAll();
+        }else if(key==40){
+            btnCancel.requestFocus();
+        }
+    }                                    
+
+    private void txtFSlot4KeyPressed(java.awt.event.KeyEvent evt) {                                     
+        // TODO add your handling code here:
+        int key=evt.getKeyCode();        
+        if(txtFSlot4.getText().equals("")){
+              slot[3] = 0;
+          }else {
+            try{
+                int i = Integer.parseInt(txtFSlot4.getText());
+                slot[3]=i;
+            }catch(NumberFormatException e){
+                JOptionPane.showMessageDialog(this, "Masukkan salah");
+                txtFSlot4.selectAll();
+            }
+        }
+        txtFHarga.setText(String.valueOf(f.hitungHarga(slot, harga, 4)));
+        if(key==10 || key==39){
+            btnBuy.requestFocus();
+        }else if(key==37){
+            txtFSlot3.requestFocus();
+            txtFSlot3.selectAll();
+        }else if(key==40){
+            btnBuy.requestFocus();
+        }
+    }
+
+    private void btnCancelKeyPressed(java.awt.event.KeyEvent evt) {                                     
+        // TODO add your handling code here:
+        int key=evt.getKeyCode();
+        if(key==10){
+//            btnCancelActionPerformed();
+            txtFSlot1.setText("");
+            txtFSlot2.setText("");
+            txtFSlot3.setText("");
+            txtFSlot4.setText("");
+            txtFHarga.setText("0");
+            for(int i=0;i<4;i++){
+                slot[i]=0;
+            }
+        }else if(key==37){
+            btnLogout.requestFocus();
+        }else if(key==39){
+            btnBuy.requestFocus();
+        }else if(key==38){
+            txtFSlot3.requestFocus();
+        }
+    }
+    
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         // TODO add your handling code here:
         txtFSlot1.setText("");
         txtFSlot2.setText("");
         txtFSlot3.setText("");
         txtFSlot4.setText("");
+        txtFHarga.setText("0");
+            for(int i=0;i<4;i++){
+                slot[i]=0;
+            }
     }//GEN-LAST:event_btnCancelActionPerformed
 
+    private void btnBuyKeyPressed(java.awt.event.KeyEvent evt) {                                  
+        // TODO add your handling code here:
+        int key=evt.getKeyCode();
+        if(key==10){
+            try{
+          Statement stmt = Koneksi1.createStatement();
+           
+          if(!f.isEmpty(slot,4)){
+            int stok[] = new int[4];
+            int i;
+            ResultSet rs = stmt.executeQuery("SELECT * FROM makanan");
+            i=0;
+            while(rs.next()){
+                stok[i] = rs.getInt("stok");
+                i++;
+            }
+            int total = 0;
+            for(i=0;i<4;i++){
+                total = total + slot[i] * harga[i];
+            }
+            if(saldo>=total){
+              for(i=0;i<4;i++){
+                if(slot[i]<=stok[i]){
+                  stok[i]=stok[i]-slot[i];
+                }else{
+                    throw new SQLException();
+                }
+              }
+              for(i=0;i<4;i++){
+                String query = "UPDATE makanan SET stok=" + stok[i] + " WHERE slot=" + (i+1);
+                PreparedStatement pre = (PreparedStatement) Koneksi1.prepareStatement(query);
+                pre.executeUpdate();
+              }
+              saldo=saldo-total;
+              PreparedStatement pre = (PreparedStatement) Koneksi1.prepareStatement("UPDATE mahasiswa SET saldo=" + saldo + " WHERE username=" + username);
+              pre.executeUpdate();
+
+              JOptionPane.showMessageDialog(this,"Pembelian \n Lays : " +slot[0] + "\n Chitato : " + slot[1] + "\n Freshtea : " + slot[2] + "\n Aqua : " + slot[3]
+              + "\n Dengan harga total " + total + " telah berhasil saldo " + saldo);
+              
+
+              //catat transaksi
+              //pre = (PreparedStatement) conn.prepareStatement("INSERT into transaksi values ('"+username+"',"+slot[0]+","+slot[1]+","+slot[2]+","+slot[3]+",CURRENT_TIME");
+            }else{
+                JOptionPane.showMessageDialog(this,"Uang Anda Kurang");
+            }
+          }
+          txtFSlot1.setText("");
+          txtFSlot2.setText("");
+          txtFSlot3.setText("");
+          txtFSlot4.setText("");
+          txtFAmount.setText(String.valueOf(saldo));
+          txtFHarga.setText("0");
+          for(int i=0;i<4;i++){
+            slot[i]=0;
+        }
+          tampilInfo();
+       }catch(SQLException e){
+           JOptionPane.showMessageDialog(this, "Ada beberapa kesalahan yang dideteksi : \n"
+                   + "1. Tertangkap SQLException \n"
+                   + "2. Jumlah stok barang tidak memenuhi permintaan \n"
+                   + "3. Anda belum membaca bismillah \n");
+       }
+        }else if(key==37){
+            btnCancel.requestFocus();
+        }else if(key==38){
+            txtFSlot4.requestFocus();
+        }
+        
+    }
+    
     private void btnBuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuyActionPerformed
 
     try{
@@ -360,6 +568,10 @@ public class MenuUtama extends javax.swing.JFrame {
           txtFSlot3.setText("");
           txtFSlot4.setText("");
           txtFAmount.setText(String.valueOf(saldo));
+          txtFHarga.setText("0");
+          for(int i=0;i<4;i++){
+            slot[i]=0;
+          }
           tampilInfo();
        }catch(SQLException e){
            JOptionPane.showMessageDialog(this, "Ada beberapa kesalahan yang dideteksi : \n"
@@ -369,12 +581,39 @@ public class MenuUtama extends javax.swing.JFrame {
        }
     }//GEN-LAST:event_btnBuyActionPerformed
 
+    private void btnHelpKeyPressed(java.awt.event.KeyEvent evt) {                                   
+        // TODO add your handling code here:
+        int key = evt.getKeyCode();
+        if(key==10){
+            JOptionPane.showMessageDialog(this, "Silahkan hubungi 082177550962");
+        }else if(key==39){
+            btnLogout.requestFocus();
+        }else if(key==38){
+            txtFSlot1.requestFocus();
+        }
+    }
+    
     private void btnHelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHelpActionPerformed
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(this,"silahkan hubungi 082177550962");
     }//GEN-LAST:event_btnHelpActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnLogoutKeyPressed(java.awt.event.KeyEvent evt) {                                     
+        // TODO add your handling code here:
+        int key=evt.getKeyCode();
+        if(key==10){
+            new Login().setVisible(true);
+            dispose();
+        }else if(key==37){
+            btnHelp.requestFocus();
+        }else if(key==39){
+            btnCancel.requestFocus();
+        }else if(key==38){
+            txtFSlot2.requestFocus();
+        }
+    }
+    
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         Login log = new Login();
         log.setVisible(true);
@@ -415,7 +654,7 @@ public class MenuUtama extends javax.swing.JFrame {
     private javax.swing.JButton btnBuy;
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnHelp;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnLogout;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -432,6 +671,7 @@ public class MenuUtama extends javax.swing.JFrame {
     private javax.swing.JLabel lblSlot4;
     private javax.swing.JTable tblInfo;
     private javax.swing.JTextField txtFAmount;
+    private javax.swing.JTextField txtFHarga;
     private javax.swing.JTextField txtFSlot1;
     private javax.swing.JTextField txtFSlot2;
     private javax.swing.JTextField txtFSlot3;

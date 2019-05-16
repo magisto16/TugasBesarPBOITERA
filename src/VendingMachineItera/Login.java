@@ -216,6 +216,7 @@ public class Login extends javax.swing.JFrame {
             koneksi.close(Koneksi1);
             
             if (flag == 0 && jTextField2.getText().equals("Mahasiswa")) {
+                JOptionPane.showMessageDialog(this, "Login Successful");
                 MenuUtama menu = new MenuUtama(jTextField1.getText());
                 menu.setVisible(true);
                 dispose();

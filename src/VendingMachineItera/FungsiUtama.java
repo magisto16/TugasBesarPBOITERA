@@ -30,4 +30,15 @@ public class FungsiUtama extends Fungsi {
         return isi;
     }
     
+    @Override
+    public int hitungHarga(int slot[], int harga[],int x) {
+        int total = 0;
+        int temp;
+        for(int i=0;i<x;i++){
+            temp = slot[i]*harga[i];
+            total = total + temp;
+        }
+        return total;
+    }
+    
 }

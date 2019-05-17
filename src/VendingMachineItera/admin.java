@@ -15,8 +15,9 @@ import javax.swing.table.DefaultTableModel;
 
 public class admin extends javax.swing.JFrame {
      DefaultTableModel model;
-
-    public admin() {
+      String user;
+    public admin(String user) {
+        this.user = user;
         initComponents();
         setSize(963,763);
         admin.getTableHeader().setFont(new Font("Calibri", Font.BOLD, 18));
@@ -34,7 +35,7 @@ public class admin extends javax.swing.JFrame {
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -63,6 +64,11 @@ public class admin extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         id.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        id.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                idActionPerformed(evt);
+            }
+        });
         jPanel1.add(id, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 40, 241, 42));
 
         nama.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
@@ -138,8 +144,6 @@ public class admin extends javax.swing.JFrame {
             }
         });
         jPanel1.add(back, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 660, 100, 36));
-
-        jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Documents\\NetBeansProjects\\Vending_Machine\\img\\bg-01.jpg")); // NOI18N
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 460, 710));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 460, 710));
@@ -167,8 +171,6 @@ public class admin extends javax.swing.JFrame {
         jScrollPane1.setViewportView(admin);
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, -1, 430));
-
-        jLabel6.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Documents\\NetBeansProjects\\Vending_Machine\\img\\Untitled-3.png")); // NOI18N
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 40, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Calibri", 1, 24)); // NOI18N
@@ -178,9 +180,9 @@ public class admin extends javax.swing.JFrame {
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 0, 490, 710));
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }// </editor-fold>                        
 
-    private void insertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertActionPerformed
+    private void insertActionPerformed(java.awt.event.ActionEvent evt) {                                       
         // TODO add your handling code here:
         if(username.getText().equals("")||
            nama.getText().equals("")||
@@ -211,9 +213,9 @@ public class admin extends javax.swing.JFrame {
             //Logger.getLogger(mahasiswa.class.getName()).log(Level.SEVERE, null, ex);
         }
          }
-    }//GEN-LAST:event_insertActionPerformed
+    }                                      
 
-    private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
+    private void updateActionPerformed(java.awt.event.ActionEvent evt) {                                       
         // TODO add your handling code here:
          if(username.getText().equals("")||
            nama.getText().equals("")||
@@ -233,7 +235,7 @@ public class admin extends javax.swing.JFrame {
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/vending_machine","root","");
             cn.createStatement().executeUpdate("update admin set "
             + "username='"+username.getText()+"',"
-            + "',nama='"+nama.getText()+"',"
+            + "nama='"+nama.getText()+"',"
             + "password='"+password.getText()+"' "+ "where "
             + "User_ID='"+id.getText()+"'");
             
@@ -254,9 +256,9 @@ public class admin extends javax.swing.JFrame {
             //Logger.getLogger(mahasiswa.class.getName()).log(Level.SEVERE, null, ex);
         }
         }
-    }//GEN-LAST:event_updateActionPerformed
+    }                                      
 
-    private void adminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminMouseClicked
+    private void adminMouseClicked(java.awt.event.MouseEvent evt) {                                   
         // TODO add your handling code here:
          int i = admin.getSelectedRow();
         if(i>-1){
@@ -265,9 +267,9 @@ public class admin extends javax.swing.JFrame {
             nama.setText(model.getValueAt(i,2).toString());
             password.setText(model.getValueAt(i,3).toString());
         }
-    }//GEN-LAST:event_adminMouseClicked
+    }                                  
 
-    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
+    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {                                       
         // TODO add your handling code here:
         try {
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/vending_machine","root","");
@@ -280,18 +282,22 @@ public class admin extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(mahasiswa.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_deleteActionPerformed
+    }                                      
 
-    private void usernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameActionPerformed
+    private void usernameActionPerformed(java.awt.event.ActionEvent evt) {                                         
         // TODO add your handling code here:
-    }//GEN-LAST:event_usernameActionPerformed
+    }                                        
 
-    private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
+    private void backActionPerformed(java.awt.event.ActionEvent evt) {                                     
         // TODO add your handling code here:
-        EditDatabase p = new EditDatabase();
+        EditDatabase p = new EditDatabase(user);
         p.setVisible(true);
         dispose();
-    }//GEN-LAST:event_backActionPerformed
+    }                                    
+
+    private void idActionPerformed(java.awt.event.ActionEvent evt) {                                   
+        // TODO add your handling code here:
+    }                                  
 
     /**
      * @param args the command line arguments
@@ -321,14 +327,14 @@ public class admin extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new admin().setVisible(true);
-            }
-        });
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new admin().setVisible(true);
+//            }
+//        });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify                     
     private javax.swing.JTable admin;
     private javax.swing.JButton back;
     private javax.swing.JButton delete;
@@ -348,7 +354,7 @@ public class admin extends javax.swing.JFrame {
     private javax.swing.JTextField password;
     private javax.swing.JButton update;
     private javax.swing.JTextField username;
-    // End of variables declaration//GEN-END:variables
+    // End of variables declaration                   
 
     private void tampilkan() {
         int row = admin.getRowCount();
@@ -361,7 +367,7 @@ public class admin extends javax.swing.JFrame {
             while(rs.next()){
                 String data[]={rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4)};
                 model.addRow(data);
-            }
+            }   
         } catch (SQLException ex) {
             Logger.getLogger(mahasiswa.class.getName()).log(Level.SEVERE, null, ex);
         }

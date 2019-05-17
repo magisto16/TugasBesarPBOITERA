@@ -283,7 +283,7 @@ public class MenuUtama extends javax.swing.JFrame {
                 slot[0]=i;
             }catch(NumberFormatException e){
                 JOptionPane.showMessageDialog(this, "Masukkan salah");
-                txtFSlot1.selectAll();
+                txtFSlot1.setText("");
             }
         }
         
@@ -306,7 +306,7 @@ public class MenuUtama extends javax.swing.JFrame {
                 slot[1]=i;
             }catch(NumberFormatException e){
                 JOptionPane.showMessageDialog(this, "Masukkan salah");
-                txtFSlot2.selectAll();
+                txtFSlot2.setText("");
             }
         }
         
@@ -332,7 +332,7 @@ public class MenuUtama extends javax.swing.JFrame {
                 slot[2]=i;
             }catch(NumberFormatException e){
                 JOptionPane.showMessageDialog(this, "Masukkan salah");
-                txtFSlot3.selectAll();
+                txtFSlot3.setText("");
             }
         }
         
@@ -358,7 +358,7 @@ public class MenuUtama extends javax.swing.JFrame {
                 slot[3]=i;
             }catch(NumberFormatException e){
                 JOptionPane.showMessageDialog(this, "Masukkan salah");
-                txtFSlot4.selectAll();
+                txtFSlot4.setText("");
             }
         }
         

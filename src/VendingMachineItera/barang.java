@@ -15,8 +15,10 @@ import javax.swing.table.DefaultTableModel;
 
 public class barang extends javax.swing.JFrame {
      DefaultTableModel model;
+     String username;
 
-    public barang() {
+    public barang(String username) {
+        this.username=username;
         initComponents();
         setSize(963,763);
         jTable1.getTableHeader().setFont(new Font("Calibri", Font.BOLD, 18));
@@ -28,7 +30,7 @@ public class barang extends javax.swing.JFrame {
         setLocation(size.width/2 - getWidth()/2, size.height/2 - getHeight()/2);
         
         
-        String []judul={"ID","Nama","Slot","Stok","Harga"};
+        String []judul={"ID","Nama","Slot","Stok","Harga","Admin"};
         model = new DefaultTableModel(judul,0);
         jTable1.setModel(model);
         tampilkan();
@@ -36,7 +38,7 @@ public class barang extends javax.swing.JFrame {
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -201,9 +203,9 @@ public class barang extends javax.swing.JFrame {
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 0, 480, 710));
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }// </editor-fold>                        
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {                                     
         // TODO add your handling code here:
          int i = jTable1.getSelectedRow();
         if(i>-1){
@@ -213,9 +215,9 @@ public class barang extends javax.swing.JFrame {
             stok.setText(model.getValueAt(i,3).toString());
             harga.setText(model.getValueAt(i,4).toString());
         }
-    }//GEN-LAST:event_jTable1MouseClicked
+    }                                    
 
-    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
+    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {                                       
         // TODO add your handling code here:
         try {
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/vending_machine","root","");
@@ -230,9 +232,9 @@ public class barang extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(mahasiswa.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_deleteActionPerformed
+    }                                      
 
-    private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
+    private void updateActionPerformed(java.awt.event.ActionEvent evt) {                                       
         // TODO add your handling code here:
        if(nama.getText().equals("")||
            id.getText().equals("")||
@@ -278,20 +280,20 @@ public class barang extends javax.swing.JFrame {
             //Logger.getLogger(mahasiswa.class.getName()).log(Level.SEVERE, null, ex);
         }
     }  
-    }//GEN-LAST:event_updateActionPerformed
+    }                                      
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {                                         
         // TODO add your handling code here:
-        EditDatabase p = new EditDatabase();
+        EditDatabase p = new EditDatabase(username);
         p.setVisible(true);
         dispose();
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }                                        
 
-    private void idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idActionPerformed
+    private void idActionPerformed(java.awt.event.ActionEvent evt) {                                   
         // TODO add your handling code here:
-    }//GEN-LAST:event_idActionPerformed
+    }                                  
 
-    private void insertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertActionPerformed
+    private void insertActionPerformed(java.awt.event.ActionEvent evt) {                                       
         // TODO add your handling code here:
        if(nama.getText().equals("")||
            id.getText().equals("")||
@@ -315,7 +317,7 @@ public class barang extends javax.swing.JFrame {
             
        
             cn.createStatement().executeUpdate("insert into makanan values"+"('"+id.getText()+"','"
-            +nama.getText()+"','"+slot.getText()+"','"+stok.getText()+"','"+harga.getText()+"')");
+            +nama.getText()+"','"+slot.getText()+"','"+stok.getText()+"','"+harga.getText()+"','"+username+"')");
             
            id.setText("");
            nama.setText("");
@@ -341,7 +343,7 @@ public class barang extends javax.swing.JFrame {
                harga.setText("");
         }
         }
-    }//GEN-LAST:event_insertActionPerformed
+    }                                      
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -371,12 +373,12 @@ public class barang extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new barang().setVisible(true);
+              //  new barang().setVisible(true);
             }
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify                     
     private javax.swing.JButton delete;
     private javax.swing.JTextField harga;
     private javax.swing.JTextField id;
@@ -399,7 +401,7 @@ public class barang extends javax.swing.JFrame {
     private javax.swing.JTextField slot;
     private javax.swing.JTextField stok;
     private javax.swing.JButton update;
-    // End of variables declaration//GEN-END:variables
+    // End of variables declaration                   
 
     private void tampilkan() {
     int row = jTable1.getRowCount();
@@ -408,9 +410,9 @@ public class barang extends javax.swing.JFrame {
         }
         try {
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/vending_machine","root","");
-            ResultSet rs = cn.createStatement().executeQuery("select * from makanan");
+            ResultSet rs = cn.createStatement().executeQuery("select id,makanan.nama,slot,stok,harga,admin.nama from admin inner join makanan on admin.username=makanan.Admin");
             while(rs.next()){
-                String data[]={rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5)};
+                String data[]={rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6)};
                 model.addRow(data);
             }
         } catch (SQLException ex) {

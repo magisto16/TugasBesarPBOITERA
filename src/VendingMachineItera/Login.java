@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 
 public class Login extends javax.swing.JFrame {
     
+    
     private HashMap<Integer,String> status = new HashMap<>();
     
     public Login() {
@@ -221,7 +222,7 @@ public class Login extends javax.swing.JFrame {
                 menu.setVisible(true);
                 dispose();
             } else if ( flag == 0 && jTextField2.getText().equals("Admin")) {
-                EditDatabase ed = new EditDatabase();
+                EditDatabase ed = new EditDatabase(jTextField1.getText());
                 ed.setVisible(true);
                 dispose();
             } else {

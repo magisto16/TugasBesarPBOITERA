@@ -4,8 +4,11 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 
 public class EditDatabase extends javax.swing.JFrame {
-
-    public EditDatabase() {
+    
+    String username;
+    
+    public EditDatabase(String username) {
+        this.username=username;
         initComponents();
         setSize(963,763);
         Toolkit toolkit = getToolkit();
@@ -14,7 +17,7 @@ public class EditDatabase extends javax.swing.JFrame {
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
@@ -114,39 +117,39 @@ public class EditDatabase extends javax.swing.JFrame {
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 710));
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }// </editor-fold>                        
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
         // TODO add your handling code here:
-        admin ad = new admin();
+        admin ad = new admin(username);
         ad.setVisible(true);
         
         dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }                                        
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {                                         
         // TODO add your handling code here:
-        mahasiswa mhs = new mahasiswa();
+        mahasiswa mhs = new mahasiswa(username);
         mhs.setVisible(true);
         
         dispose();        
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }                                        
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {                                         
         // TODO add your handling code here:
-        barang br = new barang();
+        barang br = new barang(username);
         br.setVisible(true);
         
         dispose();
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }                                        
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {                                         
         // TODO add your handling code here:
         Login log = new Login();
         log.setVisible(true);
         
         dispose();
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }                                        
 
     /**
      * @param args the command line arguments
@@ -177,14 +180,14 @@ public class EditDatabase extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new EditDatabase().setVisible(true);
-            }
-        });
+        //java.awt.EventQueue.invokeLater(new Runnable() {
+        //    public void run() {
+        //        new EditDatabase().setVisible(true);
+        //    }
+        //});
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify                     
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -199,5 +202,5 @@ public class EditDatabase extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    // End of variables declaration//GEN-END:variables
+    // End of variables declaration                   
 }

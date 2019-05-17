@@ -11,4 +11,5 @@ package VendingMachineItera;
 public abstract class Fungsi {
     
     public abstract boolean isEmpty(int slot[],int x);
+    public abstract int hitungHarga(int slot[], int harga[],int x);
 }

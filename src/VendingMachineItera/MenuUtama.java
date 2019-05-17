@@ -376,15 +376,7 @@ public class MenuUtama extends javax.swing.JFrame {
         // TODO add your handling code here:
         int key=evt.getKeyCode();
         if(key==10){
-//            btnCancelActionPerformed();
-            txtFSlot1.setText("");
-            txtFSlot2.setText("");
-            txtFSlot3.setText("");
-            txtFSlot4.setText("");
-            txtFHarga.setText("0");
-            for(int i=0;i<4;i++){
-                slot[i]=0;
-            }
+            btnCancel.doClick();
         }else if(key==37){
             btnLogout.requestFocus();
         }else if(key==39){
@@ -410,65 +402,7 @@ public class MenuUtama extends javax.swing.JFrame {
         // TODO add your handling code here:
         int key=evt.getKeyCode();
         if(key==10){
-            try{
-          Statement stmt = Koneksi1.createStatement();
-           
-          if(!f.isEmpty(slot,4)){
-            int stok[] = new int[4];
-            int i;
-            ResultSet rs = stmt.executeQuery("SELECT * FROM makanan");
-            i=0;
-            while(rs.next()){
-                stok[i] = rs.getInt("stok");
-                i++;
-            }
-            int total = 0;
-            for(i=0;i<4;i++){
-                total = total + slot[i] * harga[i];
-            }
-            if(saldo>=total){
-              for(i=0;i<4;i++){
-                if(slot[i]<=stok[i]){
-                  stok[i]=stok[i]-slot[i];
-                }else{
-                    throw new SQLException();
-                }
-              }
-              for(i=0;i<4;i++){
-                String query = "UPDATE makanan SET stok=" + stok[i] + " WHERE slot=" + (i+1);
-                PreparedStatement pre = (PreparedStatement) Koneksi1.prepareStatement(query);
-                pre.executeUpdate();
-              }
-              saldo=saldo-total;
-              PreparedStatement pre = (PreparedStatement) Koneksi1.prepareStatement("UPDATE mahasiswa SET saldo=" + saldo + " WHERE username=" + username);
-              pre.executeUpdate();
-
-              JOptionPane.showMessageDialog(this,"Pembelian \n Lays : " +slot[0] + "\n Chitato : " + slot[1] + "\n Freshtea : " + slot[2] + "\n Aqua : " + slot[3]
-              + "\n Dengan harga total " + total + " telah berhasil saldo " + saldo);
-              
-
-              //catat transaksi
-              //pre = (PreparedStatement) conn.prepareStatement("INSERT into transaksi values ('"+username+"',"+slot[0]+","+slot[1]+","+slot[2]+","+slot[3]+",CURRENT_TIME");
-            }else{
-                JOptionPane.showMessageDialog(this,"Uang Anda Kurang");
-            }
-          }
-          txtFSlot1.setText("");
-          txtFSlot2.setText("");
-          txtFSlot3.setText("");
-          txtFSlot4.setText("");
-          txtFAmount.setText(String.valueOf(saldo));
-          txtFHarga.setText("0");
-          for(int i=0;i<4;i++){
-            slot[i]=0;
-        }
-          tampilInfo();
-       }catch(SQLException e){
-           JOptionPane.showMessageDialog(this, "Ada beberapa kesalahan yang dideteksi : \n"
-                   + "1. Tertangkap SQLException \n"
-                   + "2. Jumlah stok barang tidak memenuhi permintaan \n"
-                   + "3. Anda belum membaca bismillah \n");
-       }
+            btnBuy.doClick();
         }else if(key==37){
             btnCancel.requestFocus();
         }else if(key==38){
@@ -585,7 +519,7 @@ public class MenuUtama extends javax.swing.JFrame {
         // TODO add your handling code here:
         int key = evt.getKeyCode();
         if(key==10){
-            JOptionPane.showMessageDialog(this, "Silahkan hubungi 082177550962");
+            btnHelp.doClick();
         }else if(key==39){
             btnLogout.requestFocus();
         }else if(key==38){
@@ -602,8 +536,7 @@ public class MenuUtama extends javax.swing.JFrame {
         // TODO add your handling code here:
         int key=evt.getKeyCode();
         if(key==10){
-            new Login().setVisible(true);
-            dispose();
+            btnLogout.doClick();
         }else if(key==37){
             btnHelp.requestFocus();
         }else if(key==39){

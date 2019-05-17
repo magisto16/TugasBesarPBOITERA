@@ -553,6 +553,70 @@ public class MenuUtama extends javax.swing.JFrame {
         
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+    
+    private void txtFSlot1FocusLost(java.awt.event.FocusEvent evt) {                                    
+        // TODO add your handling code here:
+        if(txtFSlot1.getText().equals("")){
+              slot[0] = 0;
+          }else {
+            try{
+                int i = Integer.parseInt(txtFSlot1.getText());
+                slot[0]=i;
+            }catch(NumberFormatException e){
+                JOptionPane.showMessageDialog(this, "Masukkan salah");
+                txtFSlot1.selectAll();
+            }
+        }
+        txtFHarga.setText(String.valueOf(f.hitungHarga(slot, harga, 4)));
+    }                                   
+
+    private void txtFSlot2FocusLost(java.awt.event.FocusEvent evt) {                                    
+        // TODO add your handling code here:
+        if(txtFSlot2.getText().equals("")){
+              slot[1] = 0;
+          }else {
+            try{
+                int i = Integer.parseInt(txtFSlot2.getText());
+                slot[1]=i;
+            }catch(NumberFormatException e){
+                JOptionPane.showMessageDialog(this, "Masukkan salah");
+                txtFSlot2.selectAll();
+            }
+        }
+        txtFHarga.setText(String.valueOf(f.hitungHarga(slot, harga, 4)));
+    }                                   
+
+    private void txtFSlot3FocusLost(java.awt.event.FocusEvent evt) {                                    
+        // TODO add your handling code here:
+        if(txtFSlot3.getText().equals("")){
+              slot[2] = 0;
+          }else {
+            try{
+                int i = Integer.parseInt(txtFSlot3.getText());
+                slot[2]=i;
+            }catch(NumberFormatException e){
+                JOptionPane.showMessageDialog(this, "Masukkan salah");
+                txtFSlot3.selectAll();
+            }
+        }
+        txtFHarga.setText(String.valueOf(f.hitungHarga(slot, harga, 4)));
+    }                                   
+
+    private void txtFSlot4FocusLost(java.awt.event.FocusEvent evt) {                                    
+        // TODO add your handling code here:
+        if(txtFSlot4.getText().equals("")){
+              slot[3] = 0;
+          }else {
+            try{
+                int i = Integer.parseInt(txtFSlot4.getText());
+                slot[3]=i;
+            }catch(NumberFormatException e){
+                JOptionPane.showMessageDialog(this, "Masukkan salah");
+                txtFSlot4.selectAll();
+            }
+        }
+        txtFHarga.setText(String.valueOf(f.hitungHarga(slot, harga, 4)));
+    }   
 
 
     public static void main(String args[]) {

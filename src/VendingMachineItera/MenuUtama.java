@@ -487,9 +487,39 @@ public class MenuUtama extends javax.swing.JFrame {
               PreparedStatement pre = (PreparedStatement) Koneksi1.prepareStatement("UPDATE mahasiswa SET saldo=" + saldo + " WHERE username=" + username);
               pre.executeUpdate();
 
+              if(txtFSlot1.getText().equals("")){
+                  
+              }else{
+                  String str = "INSERT INTO transaksi (username,id_barang,tgl,jumlah,harga) VALUES ('"+username+"',1,NOW(),"+slot[0]+","+slot[0]*harga[0]+")";
+                  PreparedStatement pro = (PreparedStatement) Koneksi1.prepareStatement(str);
+                  pro.executeUpdate();
+              }
+              if(txtFSlot2.getText().equals("")){
+                  
+              }else{
+                  String str = "INSERT INTO transaksi (username,id_barang,tgl,jumlah,harga) VALUES ('"+username+"',2,NOW(),"+slot[1]+","+slot[1]*harga[1]+")";
+                  PreparedStatement pro = (PreparedStatement) Koneksi1.prepareStatement(str);
+                  pro.executeUpdate();
+              }
+              if(txtFSlot3.getText().equals("")){
+                  
+              }else{
+                  String str = "INSERT INTO transaksi (username,id_barang,tgl,jumlah,harga) VALUES ('"+username+"',3,NOW(),"+slot[2]+","+slot[2]*harga[2]+")";
+                  PreparedStatement pro = (PreparedStatement) Koneksi1.prepareStatement(str);
+                  pro.executeUpdate();
+              }
+              if(txtFSlot4.getText().equals("")){
+                  
+              }else{
+                  String str = "INSERT INTO transaksi (username,id_barang,tgl,jumlah,harga) VALUES ('"+username+"',4,NOW(),"+slot[3]+","+slot[3]*harga[3]+")";
+                  PreparedStatement pro = (PreparedStatement) Koneksi1.prepareStatement(str);
+                  pro.executeUpdate();
+              }
+                
               JOptionPane.showMessageDialog(this,"Pembelian \n Lays : " +slot[0] + "\n Chitato : " + slot[1] + "\n Freshtea : " + slot[2] + "\n Aqua : " + slot[3]
               + "\n Dengan harga total " + total + " telah berhasil saldo " + saldo);
               
+             
 
               //catat transaksi
               //pre = (PreparedStatement) conn.prepareStatement("INSERT into transaksi values ('"+username+"',"+slot[0]+","+slot[1]+","+slot[2]+","+slot[3]+",CURRENT_TIME");
